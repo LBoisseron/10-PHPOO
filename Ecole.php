@@ -55,6 +55,11 @@ class Ecole
         return $this->effectif;
     }
 
+    public function getClasses()
+    {
+        return $this->classes;
+    }
+
     /**********SETTERS************/
     public function setNom($nom)
     {

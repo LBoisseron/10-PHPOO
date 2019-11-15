@@ -1,13 +1,21 @@
 <?php
 
 # importation de notre classe Ecole
-require_once 'Ecole.php';
+# require_once 'Ecole.php';
 
 # importation de notre classe Classe
-require_once 'Classe.php';
+# require_once 'Classe.php';
 
 # importation de notre classe Eleve
-require_once 'Eleve.php';
+# require_once 'Eleve.php';
+
+/**
+ * spl_autoload_register est une fonction permettant de faire de l'autoloading de classes.
+ * elle est appelée AUTOMATIQUEMENT par PHP dès qu'on instancie une classe qui n'a pas été incluse
+ */
+spl_autoload_register(function( $class ) {
+    require_once $class . '.php';
+});
 
 /**
  * création d'une instance de la classe Ecole
@@ -79,17 +87,17 @@ echo '</pre>';
 $eleve = new Eleve(
     'SELBONNE',
     'Khénaël',
-    10
+    9
 );
 $eleve2 = new Eleve(
     'KANCHAN',
     'Yohan',
-    10
+    9
 );
 $eleve3 = new Eleve(
-    'GAYDU',
-    'Sacha',
-    10
+    'SELBONNE',
+    'Khélian',
+    11
 );
 
 echo '<pre>';
@@ -108,7 +116,9 @@ print_r($classe2);
 print_r($classe3);
 echo '</pre>';
 
+$ecole->ajouterUneClasse($classe);
 $ecole->ajouterUneClasse($classe2);
+$ecole->ajouterUneClasse($classe3);
 echo '<pre>';
 print_r($ecole);
 echo '</pre>';
@@ -118,5 +128,29 @@ echo '</pre>';
  * en partant de l'objet $ecole : affichez la liste ol, ul, li des classes et pour chaque classe les élèves
  */
 
-echo '<pre>';
-print_r($)
+# récupération des classes
+$classes = $ecole->getClasses();
+
+# on parcourt nos classes
+echo '<ol>';
+
+    foreach ($classes as $classe) {
+        #afficher le nom de la classe
+        echo '<li>';
+            echo $classe->getNom();
+        echo '</li>';
+
+        # afficher la liste des élèves
+        echo '<ul>';
+            # je récupère les élèves de la classe
+            $eleves = $classe->getEleves();
+
+    foreach ($eleves as $eleve) {
+        echo '<li>';
+            echo $eleve->getPrenom();
+        echo '</li>';
+            }
+
+        echo '</ul>';
+    }
+echo '</ol>';
